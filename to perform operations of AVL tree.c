@@ -1,9 +1,5 @@
-// AVL tree implementation in C
-
 #include <stdio.h>
 #include <stdlib.h>
-
-// Create Node
 struct Node {
   int key;
   struct Node *left;
@@ -12,8 +8,6 @@ struct Node {
 };
 
 int max(int a, int b);
-
-// Calculate height
 int height(struct Node *N) {
   if (N == NULL)
     return 0;
@@ -23,8 +17,6 @@ int height(struct Node *N) {
 int max(int a, int b) {
   return (a > b) ? a : b;
 }
-
-// Create a node
 struct Node *newNode(int key) {
   struct Node *node = (struct Node *)
     malloc(sizeof(struct Node));
@@ -34,8 +26,6 @@ struct Node *newNode(int key) {
   node->height = 1;
   return (node);
 }
-
-// Right rotate
 struct Node *rightRotate(struct Node *y) {
   struct Node *x = y->left;
   struct Node *T2 = x->right;
@@ -48,8 +38,6 @@ struct Node *rightRotate(struct Node *y) {
 
   return x;
 }
-
-// Left rotate
 struct Node *leftRotate(struct Node *x) {
   struct Node *y = x->right;
   struct Node *T2 = y->left;
@@ -62,17 +50,12 @@ struct Node *leftRotate(struct Node *x) {
 
   return y;
 }
-
-// Get the balance factor
 int getBalance(struct Node *N) {
   if (N == NULL)
     return 0;
   return height(N->left) - height(N->right);
 }
-
-// Insert node
 struct Node *insertNode(struct Node *node, int key) {
-  // Find the correct position to insertNode the node and insertNode it
   if (node == NULL)
     return (newNode(key));
 
@@ -82,9 +65,6 @@ struct Node *insertNode(struct Node *node, int key) {
     node->right = insertNode(node->right, key);
   else
     return node;
-
-  // Update the balance factor of each node and
-  // Balance the tree
   node->height = 1 + max(height(node->left),
                height(node->right));
 
@@ -116,23 +96,16 @@ struct Node *minValueNode(struct Node *node) {
 
   return current;
 }
-
-// Delete a nodes
 struct Node *deleteNode(struct Node *root, int key) {
-  // Find the node and delete it
   if (root == NULL)
     return root;
-
   if (key < root->key)
     root->left = deleteNode(root->left, key);
-
   else if (key > root->key)
     root->right = deleteNode(root->right, key);
-
   else {
     if ((root->left == NULL) || (root->right == NULL)) {
       struct Node *temp = root->left ? root->left : root->right;
-
       if (temp == NULL) {
         temp = root;
         root = NULL;
@@ -150,9 +123,6 @@ struct Node *deleteNode(struct Node *root, int key) {
 
   if (root == NULL)
     return root;
-
-  // Update the balance factor of each node and
-  // balance the tree
   root->height = 1 + max(height(root->left),
                height(root->right));
 
@@ -175,8 +145,6 @@ struct Node *deleteNode(struct Node *root, int key) {
 
   return root;
 }
-
-// Print the tree
 void printPreOrder(struct Node *root) {
   if (root != NULL) {
     printf("%d ", root->key);
